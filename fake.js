@@ -7,30 +7,32 @@ faker.locale = 'ru';
 
 module.exports = class Faker {
     constructor() {
-        this.fakeData = {
+        this.data = {
             status: 'ok',
             timestamp: `${moment().format("L")} ${moment().format("LT")}`,
             messages: []
         };
     }
-
     create() {
-        return {
-            id: uuidv4(),
-            from: faker.internet.email(),
-            subject: faker.lorem.sentence(),
-            text: faker.lorem.sentences(),
-            timestamp: `${moment().format("L")} ${moment().format("LT")}`,
+        const index = Math.round(1 - 0.5 + Math.random() * (4 - 1 + 1));
+        for (let i = 0; i < index; i += 1) {
+            this.data.messages.push({
+                id: uuidv4(),
+                from: faker.internet.email(),
+                subject: faker.lorem.sentence(),
+                text: faker.lorem.sentences(),
+                timestamp: `${moment().format("L")} ${moment().format("LT")}`,
+            });
         }
     }
 
     init() {
-        setTimeout(() => {
-            this.fakeData.messages.push(this.create());
-        }, 5000)
+        setInterval(() => {
+            this.create();
+        }, 20000)
     }
 
     sendData() {
-        return this.fakeData;
+        return this.data;
     }
 }

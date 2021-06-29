@@ -14,7 +14,7 @@ app.use(
     origin: "*",
     credentials: true,
     "Access-Control-Allow-Origin": true,
-    allowMethods: ["GET"],
+    allowMethods: ["GET", "POST", "PUT", "DELETE"],
   })
 );
 
@@ -23,7 +23,6 @@ app.use(koaBody({ json: true, text: true, urlencoded: true }));
 const router = new Router();
 
 router.get("/messages/unread", async (ctx) => {
-  console.log(ctx.request);
   ctx.response.body = faker.sendData();
 });
 
